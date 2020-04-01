@@ -15,6 +15,10 @@ class Hiera
                     decrypt_command: {
                         desc: 'Command to run to decrypt data (takes data on stdin)',
                         type: :string
+                    },
+                    stderr: {
+                        desc: 'Capture stderr on command output',
+                        type: :bool
                     }
                 }
 
@@ -35,8 +39,20 @@ class Hiera
                     decrypt_command
                 end
 
+                def self.stderr
+                    stderr = option :stderr
+                    if stderr.nil? || stderr.empty?
+                        stderr = false
+                    end
+                    stderr
+                end
+
                 def self.encrypt(plaintext)
-                    out, status = Open3.capture2(self.encrypt_command, :stdin_data=>plaintext)
+                    if self.stderr
+                        out, status = Open3.capture2(self.encrypt_command, :stdin_data=>plaintext)
+                    else
+                        out, err, status = Open3.capture3(self.encrypt_command, :stdin_data=>plaintext)
+                    end
                     if status != 0
                         raise 'Call to encrypt subcommand failed'
                     end
@@ -44,7 +60,11 @@ class Hiera
                 end
 
                 def self.decrypt(ciphertext)
-                    out, status = Open3.capture2(self.decrypt_command, :stdin_data=>ciphertext)
+                    if self.stderr
+                        out, status = Open3.capture2(self.decrypt_command, :stdin_data=>ciphertext)
+                    else
+                        out, err, status = Open3.capture3(self.decrypt_command, :stdin_data=>ciphertext)
+                    end
                     if status != 0
                         raise 'Call to decrypt subcommand failed'
                     end
