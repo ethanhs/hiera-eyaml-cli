@@ -1,4 +1,4 @@
-require 'Open3'
+require 'open3'
 
 class Hiera
     module Backend
@@ -50,11 +50,12 @@ class Hiera
                 def self.encrypt(plaintext)
                     if self.stderr
                         out, status = Open3.capture2(self.encrypt_command, :stdin_data=>plaintext)
+                        err = ''
                     else
                         out, err, status = Open3.capture3(self.encrypt_command, :stdin_data=>plaintext)
                     end
                     if status != 0
-                        raise 'Call to encrypt subcommand failed'
+                        raise 'Call to encrypt subcommand failed:\n%s\n%s' % [out, err]
                     end
                     out
                 end
@@ -62,11 +63,12 @@ class Hiera
                 def self.decrypt(ciphertext)
                     if self.stderr
                         out, status = Open3.capture2(self.decrypt_command, :stdin_data=>ciphertext)
+                        err = ''
                     else
                         out, err, status = Open3.capture3(self.decrypt_command, :stdin_data=>ciphertext)
                     end
                     if status != 0
-                        raise 'Call to decrypt subcommand failed'
+                        raise 'Call to decrypt subcommand failed:\n%s\n%s' % [out, err]
                     end
                     out
                 end
