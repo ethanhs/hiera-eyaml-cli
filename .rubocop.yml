@@ -11,5 +11,7 @@ Metrics/LineLength:
   Max: 100
 Style/FormatStringToken:
   Enabled: false
+Style/IfUnlessModifier:
+  Enabled: false
 Style/Documentation:
   Enabled: false
