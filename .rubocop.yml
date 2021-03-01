@@ -8,7 +8,6 @@ Metrics/MethodLength:
   Max: 30
 Metrics/LineLength:
   IgnoreCopDirectives: true
-Metrics/LineLength:
   Max: 100
 Style/FormatStringToken:
   Enabled: false
