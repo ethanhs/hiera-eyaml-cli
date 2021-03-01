@@ -22,7 +22,7 @@ class Hiera
                     }
                 }
 
-                          
+
                 def self.encrypt_command
                     encrypt_command = option :encrypt_command
                     if encrypt_command.nil? || encrypt_command.empty?
@@ -72,7 +72,7 @@ class Hiera
                     end
                     out
                 end
-                
+
                 def self.create_keys
                     STDERR.puts 'This encryptor does not support creation of keys'
                 end
