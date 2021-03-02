@@ -8,4 +8,4 @@ class Hiera
       end
     end
   end
-  end
+end
