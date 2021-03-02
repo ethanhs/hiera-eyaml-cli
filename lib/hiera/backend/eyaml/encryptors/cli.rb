@@ -78,7 +78,7 @@ class Hiera
             STDERR.puts 'This encryptor does not support creation of keys'
           end
         end
-        end
       end
     end
-    end
+  end
+end
